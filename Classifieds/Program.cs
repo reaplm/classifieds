@@ -1,7 +1,24 @@
+using Classifieds.Repository;
+using Classifieds.Repository.Impl;
+using Classifieds.Service;
+using Classifieds.Service.Impl;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Add service for server side blazor
+builder.Services.AddServerSideBlazor();
+
+//MySQL Connection
+var connectionString = builder.Configuration.GetSection("mysqlconnection")["connectionString"];
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseMySQL(connectionString));
+
+//Dependency Injection
+builder.Services.AddScoped<IAdvertService, AdvertService>();
+builder.Services.AddScoped<IAdvertRepo, AdvertRepo>();
 
 var app = builder.Build();
 
@@ -23,5 +40,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//Mapping for signal R hub
+app.MapBlazorHub();
 
 app.Run();

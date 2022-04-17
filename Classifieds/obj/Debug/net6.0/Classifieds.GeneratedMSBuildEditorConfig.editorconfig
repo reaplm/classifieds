@@ -15,6 +15,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\pmolefe\Source\Repos\Classifieds\Classifieds
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/pmolefe/Source/Repos/Classifieds/Classifieds/Components/ClassifiedsList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDbGFzc2lmaWVkc0xpc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pmolefe/Source/Repos/Classifieds/Classifieds/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pmolefe/Source/Repos/Classifieds/Classifieds/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

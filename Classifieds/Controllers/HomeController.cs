@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using Classifieds.Domain.Models;
 using Classifieds.Models;
+using Classifieds.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Classifieds.Controllers
@@ -7,14 +9,16 @@ namespace Classifieds.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        
+
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
+            ViewBag.Title = "Home";
             return View();
         }
 

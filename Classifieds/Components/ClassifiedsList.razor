@@ -1,0 +1,38 @@
+﻿@inject IAdvertService AdvertService
+
+@if(Adverts == null)
+{
+	
+}
+else
+{
+	<table>
+
+	@foreach(var advert in Adverts)
+	{
+		<tr>
+			<td>@advert.Detail.Title</td>
+			<td>@advert.Detail.Body</td>
+		</tr>
+	}
+	</table>
+}
+
+
+
+
+	@code {
+
+		public IEnumerable<Classifieds.Domain.Models.Advert> Adverts = new List<Advert>();
+		//HttpClient Http = new HttpClient();
+
+		protected override async Task OnInitializedAsync()
+		{
+			await GetAdverts();
+		}
+		protected async Task GetAdverts()
+		{
+			Adverts = await AdvertService.FindAll();
+		}
+
+}
