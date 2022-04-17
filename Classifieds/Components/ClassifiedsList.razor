@@ -6,16 +6,23 @@
 }
 else
 {
-	<table>
+	<div class="column-container">
 
 	@foreach(var advert in Adverts)
 	{
-		<tr>
-			<td>@advert.Detail.Title</td>
-			<td>@advert.Detail.Body</td>
-		</tr>
+	
+		<div class="card mb-3 shadow-sm " style="width: 18rem;">
+		  <div class="card-body">
+			<h5 class="card-title">@advert.Detail.Title</h5>
+			<h6 class="card-subtitle mb-2 text-muted">@advert.Detail.Location, @advert.Detail.Phone</h6>
+			<p class="card-text">@advert.Detail.Body</p>
+			<a href="#" class="card-link card-link-color">More</a>
+		  </div>
+		
+		</div>
 	}
-	</table>
+		
+	</div>
 }
 
 

@@ -14,5 +14,19 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #e9eef2;
 }
+.column-container {
+    column-count: 4;
+    
+}
+.card {
+    break-inside: avoid-column;
+
+    
+}
+.card-link-color{
+    color: #f8d650;
+}
+              
