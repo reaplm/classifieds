@@ -17,16 +17,35 @@ body {
     margin-bottom: 60px;
     background-color: #e9eef2;
 }
-.column-container {
-    column-count: 4;
-    
-}
-.card {
-    break-inside: avoid-column;
 
-    
+.card {
+    background-color: #fdefb2;
 }
-.card-link-color{
-    color: #f8d650;
+
+.grid-item {
+    width: 160px;
 }
-              
+
+.grid-item--width2 {
+    width: 340px;
+}
+
+.grid-item--width3 {
+    width: 520px;
+}
+
+.grid-item--width4 {
+    width: 780px;
+}
+
+.grid-item--height2 {
+    height: 200px;
+}
+
+.grid-item--height3 {
+    height: 260px;
+}
+
+.grid-item--height4 {
+    height: 360px;
+}

@@ -6,17 +6,19 @@
 }
 else
 {
-	<div class="column-container">
+	<div class="row p-0" data-masonry='{"percentPosition": true }'>
 
 	@foreach(var advert in Adverts)
 	{
-	
-		<div class="card mb-3 shadow-sm " style="width: 18rem;">
+		<div class="card m-3 shadow-sm px-0" style="width: 18rem;">
+			<div class="card-header d-flex justify-content-between">
+				<h5 class="card-title text-capitalize">@advert.Detail.Title</h5>
+		  </div>
 		  <div class="card-body">
-			<h5 class="card-title">@advert.Detail.Title</h5>
+			
 			<h6 class="card-subtitle mb-2 text-muted">@advert.Detail.Location, @advert.Detail.Phone</h6>
 			<p class="card-text">@advert.Detail.Body</p>
-			<a href="#" class="card-link card-link-color">More</a>
+			<a href="#" class="card-link card-link-color"><i class="fas fa-cloud"></i></a>
 		  </div>
 		
 		</div>
