@@ -18,6 +18,7 @@ body {
     background-color: #e9eef2;
 }
 
+/*------------------------------Home----------------------------------------------------------*/
 .card {
     background-color: #fdefb2;
 }
@@ -48,4 +49,13 @@ body {
 
 .grid-item--height4 {
     height: 360px;
+}
+/*------------------------------Navbar----------------------------------------------------------*/
+.navbar-brand, .nav-link {
+    color: #666 !important;
+}
+.nav-link:hover, .nav-link:focus, .nav-link:active,
+.navbar-brand:hover, .navbar-brand:focus, .navbar-brand:active {
+    color: #f7547a !important;
+    text-decoration: underline;
 }
