@@ -1,22 +1,32 @@
-﻿using Classifieds.Domain.Models;
-using Classifieds.Service.Impl;
+﻿using Classifieds.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Classifieds.Controllers
 {
-	public class AdvertController : Controller
+	[Route("api/[controller]")]
+	[ApiController]
+	public class AdvertController : ControllerBase
 	{
-		private AdvertService _advertService;
+		private IAdvertRepo _advertRepo;
 
-		public AdvertController(AdvertService advertService)
+		public AdvertController(IAdvertRepo advertRepo)
 		{
-			_advertService = advertService;
+			_advertRepo = advertRepo;
 		}
 
 		[HttpGet]
-		public IActionResult Index()
+		public async Task<IActionResult> FindAll()
 		{
-			return View();
+            try
+            {
+				return Ok(await _advertRepo.FindAll());
+			}
+			catch (Exception)
+            {
+				return StatusCode(StatusCodes.Status500InternalServerError,
+					"Error retrieving data from the database");
+            }
+			
 		}
 	}
 }

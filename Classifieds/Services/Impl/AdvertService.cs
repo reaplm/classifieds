@@ -1,6 +1,6 @@
 ﻿using Classifieds.Domain.Models;
 using Classifieds.Repository;
-
+using Newtonsoft.Json;
 
 namespace Classifieds.Service.Impl
 {
@@ -10,15 +10,23 @@ namespace Classifieds.Service.Impl
     public class AdvertService : IAdvertService
     {
         readonly
-        private IAdvertRepo advertRepo;
+        private HttpClient _httpClient;
 
-        public AdvertService(IAdvertRepo advertRepo) 
+        public AdvertService(HttpClient httpClient) 
         {
-            this.advertRepo = advertRepo;
+            _httpClient = httpClient;
         }
         public async Task<IEnumerable<Advert>> FindAll()
         {
-            return await advertRepo.FindAll();
+            
+            var response = await _httpClient.GetAsync("api/Advert");
+            response.EnsureSuccessStatusCode();
+
+            Task<String> jsonString = response.Content.ReadAsStringAsync();
+            var adverts = JsonConvert.DeserializeObject<List<Advert>>(jsonString.Result);
+
+            return adverts;
+             
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Classifieds.Domain.Models
 {
@@ -40,6 +41,7 @@ namespace Classifieds.Domain.Models
         [Column(name: "location")]
         public String? Location { set; get; }
 
+        [JsonIgnore]
         public virtual Advert? Advert { set; get; }
     }
 }

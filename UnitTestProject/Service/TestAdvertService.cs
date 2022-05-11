@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Classifieds.Domain.Models;
-using Classifieds.Repository;
-using Classifieds.Service.Impl;
 using Moq;
 using Xunit;
+using System.Net.Http.Json;
+using System.Threading;
+using Classifieds.Service.Impl;
+using Moq.Protected;
+using Newtonsoft.Json;
 
 namespace UnitTestProject.Service
 {
@@ -20,21 +24,67 @@ namespace UnitTestProject.Service
 		{
 
 		}
-
+		//Test FindAll Status OK
 		[Fact]
 		public void TestFindAll()
 		{
 
-			var mockRepo = new Mock<IAdvertRepo>();
-			mockRepo.Setup(x => x.FindAll()).Returns(Task.FromResult(GetAdverts()));
+			var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+			mockHttpMessageHandler.Protected()
+				.Setup<Task<HttpResponseMessage>>("SendAsync",
+				true,
+				ItExpr.IsAny<HttpRequestMessage>(),
+				ItExpr.IsAny<CancellationToken>())
+				.ReturnsAsync(new HttpResponseMessage
+                {
+					StatusCode = System.Net.HttpStatusCode.OK,
+					Content = new StringContent(JsonConvert.SerializeObject(GetAdverts()))
+					
+                })
+				.Verifiable();
+			//Otherwise you get base address exception
+			var client = new HttpClient(mockHttpMessageHandler.Object)
+			{
+				BaseAddress = new Uri("http://test.com")
+			};
+			
+			var advertService = new AdvertService(client);
 
-			var service = new AdvertService(mockRepo.Object);
-			var task = service.FindAll();
+			var task = advertService.FindAll();
 			var adverts = task.Result;
 
+			Assert.NotNull(adverts);
 			Assert.Equal(7, adverts.Count());
 		}
-		private List<Advert> GetAdverts()
+		//Test FindAll Status 500
+		[Fact]
+		public void TestFindAllStatus500()
+		{
+
+			var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+			mockHttpMessageHandler.Protected()
+				.Setup<Task<HttpResponseMessage>>("SendAsync",
+				true,
+				ItExpr.IsAny<HttpRequestMessage>(),
+				ItExpr.IsAny<CancellationToken>())
+				.ReturnsAsync(new HttpResponseMessage
+				{
+					StatusCode = System.Net.HttpStatusCode.InternalServerError
+
+				})
+				.Verifiable();
+			//Otherwise you get base address exception
+			var client = new HttpClient(mockHttpMessageHandler.Object)
+			{
+				BaseAddress = new Uri("http://test.com")
+			};
+		
+			var advertService = new AdvertService(client);
+			var task = advertService.FindAll();
+			Assert.NotNull(task.Exception.InnerException);
+			Assert.ThrowsAsync<HttpRequestException>(() => advertService.FindAll());
+		}
+		private IEnumerable<Advert> GetAdverts()
 		{
 			List<Advert> adverts = new List<Advert>
 			{

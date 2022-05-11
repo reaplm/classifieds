@@ -17,9 +17,16 @@ var connectionString = builder.Configuration.GetSection("mysqlconnection")["conn
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseMySQL(connectionString));
 
 //Dependency Injection
-builder.Services.AddScoped<IAdvertService, AdvertService>();
+//builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<IAdvertRepo, AdvertRepo>();
+builder.Services.AddTransient<IAdvertService, AdvertService>();
 
+var baseUrl = builder.Configuration.GetValue<String>("BaseUrl");
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseUrl) });
+
+//Json Options
+
+        
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
